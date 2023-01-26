@@ -1,0 +1,99 @@
+version: "3.8"
+
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      network:
+        ipv4_address: 172.20.0.101
+
+  sensors:
+    image: giordanotin/sa_sensors:latest
+    container_name: sensors
+    restart: always
+    networks:
+      network:
+        ipv4_address: 172.20.0.102
+    depends_on:
+      - mosquitto
+
+  gateway:
+    image: giordanotin/sa_gateway:latest
+    container_name: gateway
+    restart: always
+    networks:
+      network:
+        ipv4_address: 172.20.0.103
+    depends_on:
+      - mosquitto
+
+  consumptions:
+    image: giordanotin/sa_consumptions:latest
+    container_name: consumptions
+    restart: always
+    networks:
+      network:
+        ipv4_address: 172.20.0.104
+
+  db:
+    image: mysql
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: energy_community
+      TZ: Europe/Rome
+    ports:
+      - "3306:3306"
+    networks:
+      network:
+        ipv4_address: 172.20.0.105
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "80:80"
+    networks:
+      network:
+        ipv4_address: 172.20.0.106
+
+  cleaner:
+    image: giordanotin/sa_cleaner:latest
+    container_name: cleaner
+    restart: always
+    networks:
+      network:
+        ipv4_address: 172.20.0.107
+    depends_on:
+      - db
+
+  frontend:
+    image: giordanotin/sa_frontend:latest
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      network:
+        ipv4_address: 172.20.0.108
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
