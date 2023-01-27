@@ -1,9 +1,14 @@
 import React from 'react';
 import Predict from './components/Predict';
+import Consumptions from './components/Consumptions';
 
-interface IProps {}
+interface IProps { user: number }
 export default function Predictions(props: IProps) {
-    return(<div className={"container"}>
+
+    const user = props.user;
+
+    return(<div className={"container d-flex"}>
         <Predict />
+        <Consumptions user={user} />
     </div>);
 }

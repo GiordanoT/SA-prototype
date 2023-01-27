@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import * as tf from '@tensorflow/tfjs';
 import {data, target} from "./dataset";
-import {WindTurbineSVG} from "../../../components";
+import {WindTurbineSVG} from "components";
 
 interface IProps {}
 export default function Predict(props: IProps) {

@@ -12,6 +12,7 @@ import DoubleLineChart from "./charts/DoubleLine";
 import Download from "./download/Download";
 import EmissionsSVG from "./svg/EmissionsSVG";
 import MoneySVG from "./svg/MoneySVG";
+import ConsumptionSVG from "./svg/ConsumptionSVG";
 
 export { Test, SolarPanelSVG, WindTurbineSVG, SunSVG, MoonSVG, CloudSVG, RainSVG, SnowSVG,
-    Navbar, LineChart, Download, EmissionsSVG, DoubleLineChart, MoneySVG };
+    Navbar, LineChart, Download, EmissionsSVG, DoubleLineChart, MoneySVG, ConsumptionSVG };

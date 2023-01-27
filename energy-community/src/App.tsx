@@ -37,7 +37,7 @@ export default function App() {
     {(user.uid && user.route === 0) && <Home state={state} />}
     {(user.uid && user.route === 1) && <SolarPanels length={user.solarPanels} user={user.id} />}
     {(user.uid && user.route === 2) && <WindTurbines length={user.windTurbines} user={user.id} />}
-    {(user.uid && user.route === 3) && <Predictions />}
+    {(user.uid && user.route === 3) && <Predictions user={user.id} />}
     {(user.uid && user.route === 4) && <Bills user={user.id} />}
     {(user.uid && user.route === 5) && <Consumptions user={user.id} devices={utility.devices} />}
 
